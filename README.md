@@ -11,7 +11,7 @@ O sistema tem como objetivo auxiliar e substituir parte do trabalho manual reali
 
 ## Equipe
 **Luiz Gustavo**: Design geral do sistema, UI/UX e gerenciamento de requisitos (Github: ) \
-**Karol Rodrigues**: Desenvolvimento de todo Front-end relacionado ao acesso de administradores ao sistema (Github: ) \
+**Karoline Rodrigues**: Desenvolvimento de todo Front-end relacionado ao acesso de administradores ao sistema (Github: ) \
 **Vinícius Rodrigues**: Desenvolvimento de todo Front-end relacionado ao acesso de professores ao sistema (Github: ) \
 **Raquel Pereira**: Desenvolvimento de todo Front-end relacionado ao acesso de alunos ao sistema (Github: ) \
-**Leonardo Gomes**: Gerenciamento do repositório e assistência de forma geral (Github: )
+**Leôncio Brito**: Gerenciamento do repositório e assistência de forma geral (Github: )

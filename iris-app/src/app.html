@@ -5,6 +5,12 @@
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		%sveltekit.head%
+		<!-- Add these styles to the head of your HTML file -->
+		<link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css"> <!-- Add these scripts to the bottom of your HTML file, just before the closing body tag -->
+		<script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents">%sveltekit.body%</div>

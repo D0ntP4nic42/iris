@@ -44,7 +44,7 @@
 		{#if form?.missing}<p class="error">The email field is required</p>{/if}
 		{#if form?.incorrect}<p class="error">Invalid credentials!</p>{/if}
 		-->
-		<h1 class="text-center title roboto-black">Íris</h1>
+		<h1 class="text-center title roboto-black" style="user-select: none">Íris</h1>
 
 		<label id="cpfLabel" for="cpfInput" class="mt-3 roboto-bold">CPF</label><br />
 		<input

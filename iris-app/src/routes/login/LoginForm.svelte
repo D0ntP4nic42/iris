@@ -85,7 +85,7 @@
 
 	.form-container {
 		padding: 20px;
-		max-height: 70%;
+		max-height: 75%;
 	}
 
 	.glass-effect {

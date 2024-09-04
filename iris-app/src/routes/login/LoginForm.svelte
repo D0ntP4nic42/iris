@@ -33,9 +33,9 @@
 
 <div class="container d-flex justify-content-center w-50 h-50">
 	<form class="form-control form-container glass-effect" on:submit={fazerLogin}>
-		<h1 class="text-center title roboto-bold">Sistema Acadêmico Íris</h1>
+		<h1 class="text-center title roboto-black">Sistema Acadêmico Íris</h1>
 
-		<label id="cpfLabel" for="cpfInput" class="mt-3">CPF</label><br />
+		<label id="cpfLabel" for="cpfInput" class="mt-3 roboto-bold">CPF</label><br />
 		<input
 			class="form-control mb-3 input-group"
 			id="cpfInput"
@@ -44,10 +44,10 @@
 			use:initializeMask
 		/>
 
-		<label class="mt-3" id="senhaLabel" for="senhaInput">SENHA</label><br />
+		<label class="mt-3 roboto-bold" id="senhaLabel" for="senhaInput">SENHA</label><br />
 		<input class="form-control mb-3 input-group" id="senhaInput" type="password" placeholder="" />
 
-		<input type="submit" class="btn btn-primary mt-3 mb-3" value="Entrar" />
+		<input type="submit" class="btn btn-primary mt-3 mb-3 roboto-regular" value="Entrar" />
 	</form>
 </div>
 

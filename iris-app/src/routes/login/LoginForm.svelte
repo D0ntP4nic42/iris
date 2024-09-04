@@ -36,7 +36,8 @@
 </script>
 
 <div class="container container-login d-flex justify-content-center w-50 h-75">
-	<form method="POST" action="?/login" class="form-control form-container glass-effect" on:submit={fazerLogin}>
+	<!--colocar action no form.-->
+	<form method="POST" class="form-control form-container glass-effect" on:submit={fazerLogin}>
 		<!--
 
 		implementar quando a API já estiver pronta.

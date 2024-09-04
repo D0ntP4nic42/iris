@@ -1,0 +1,8 @@
+:root {
+    --color-primary: #0056A0; /* Example primary color */
+    --color-secondary: #003C71; /* Example secondary color */
+    --color-accent: #F0C000; /* Example accent color */
+    --color-background: #F4F4F4; /* Background color */
+    --color-text: #333333; /* Text color */
+    --color-border: #CCCCCC; /* Border color */
+}

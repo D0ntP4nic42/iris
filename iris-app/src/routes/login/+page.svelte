@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Login from './Login.svelte'
+    import Login from './LoginForm.svelte';
 </script>
 
 <div class="background h-100 w-100">

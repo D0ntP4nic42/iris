@@ -4,7 +4,7 @@
 
 <div class="background">
     <div class="container w-75 h-75">
-        <Login></Login>
+        <Login/>
     </div>
 </div>
 

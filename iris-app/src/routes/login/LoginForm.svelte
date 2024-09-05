@@ -1,11 +1,11 @@
 <script lang="ts">
 	// usar bcrypt para fazer hash das senhas
-	import {fly, fade } from 'svelte/transition';
+	import { fly, fade } from 'svelte/transition';
 	import IMask from 'imask';
 
 	let cpfInput: string;
 	let senhaInput: string;
-	let hasError : boolean;
+	let hasError: boolean;
 
 	function initializeMask(node: HTMLInputElement) {
 		IMask(node, {
@@ -16,21 +16,23 @@
 	function fazerLogin(event: Event) {
 		event.preventDefault();
 
-		cpfInput = (document.getElementById('cpfInput') as HTMLInputElement).value;
-		senhaInput = (document.getElementById('senhaInput') as HTMLInputElement).value;
+		document.getElementById('cpfInput')?.classList.remove('input-error');
+		document.getElementById('senhaInput')?.classList.remove('input-error');
 
-		if (!cpfInput || !senhaInput) {
-
-			if (!cpfInput) {
+		if ((!cpfInput || cpfInput.length < 14) || !senhaInput) {
+			if (!cpfInput || cpfInput.length < 14) {
 				document.getElementById('cpfInput')?.focus();
-			} else if (!senhaInput) {
-				document.getElementById('senhaInput')?.focus();
+				(document.getElementById('cpfInput') as HTMLInputElement).classList.add('input-error');
 			}
-			return hasError = true;
+			if (!senhaInput) {
+				document.getElementById('senhaInput')?.focus();
+				(document.getElementById('senhaInput') as HTMLInputElement).classList.add('input-error');
+			}
+			hasError = true;
 		} else {
-			//tratamento de autenticação
+			// Handle authentication
 			console.log(cpfInput, senhaInput);
-			return hasError = false;
+			hasError = false;
 		}
 	}
 </script>
@@ -48,25 +50,33 @@
 
 		<label id="cpfLabel" for="cpfInput" class="mt-3 roboto-bold">CPF</label><br />
 		<input
-			class="form-control mb-3 input-group"
+			class="form-control mb-3 input-group input {cpfInput === '' ? 'input-error' : ''}"
 			id="cpfInput"
 			type="text"
 			name="cpf"
 			placeholder="000.000.000-00"
+			bind:value={cpfInput}
 			use:initializeMask
 		/>
 
 		<label class="mt-3 roboto-bold" id="senhaLabel" for="senhaInput">SENHA</label><br />
-		<input class="form-control mb-3 input-group" id="senhaInput" name="senha" type="password" placeholder="" />
+		<input
+			class="form-control mb-3 input-group input {senhaInput === '' ? 'input-error' : ''}"
+			id="senhaInput"
+			name="senha"
+			type="password"
+			bind:value={senhaInput}
+			placeholder=""
+		/>
+
 		{#if hasError}
-			<div transition:fade={{delay: 150, duration:200}} class="container error-container">
+			<div transition:fade={{ delay: 150, duration: 200 }} class="container error-container">
 				<p class="error p-2">Preencha os campos corretamente.</p>
 			</div>
 		{/if}
 
 		<input type="submit" class="btn btn-primary mt-3 mb-3 roboto-regular" value="Entrar" />
 	</form>
-
 </div>
 
 <style>
@@ -79,7 +89,7 @@
 	}
 
 	.error-container {
-		background-color: #E52207;
+		background-color: var(--color-error);
 		border-radius: 5px;
 	}
 
@@ -100,5 +110,15 @@
 
 	.title {
 		color: var(--color-primary);
+	}
+
+	.input {
+		border: 1px solid #ccc;
+		padding: 8px;
+		border-radius: 4px;
+	}
+
+	.input-error {
+		border: 1px solid var(--color-error);
 	}
 </style>

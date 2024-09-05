@@ -5,4 +5,5 @@
     --color-background: #F4F4F4; /* Background color */
     --color-text: #333333; /* Text color */
     --color-border: #CCCCCC; /* Border color */
+    --color-error: #e52207 /* Error color */
 }

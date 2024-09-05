@@ -28,24 +28,17 @@
 				document.getElementById('senhaInput')?.focus();
 				(document.getElementById('senhaInput') as HTMLInputElement).classList.add('input-error');
 			}
-			hasError = true;
+			return hasError = true;
 		} else {
 			// Handle authentication
 			console.log(cpfInput, senhaInput);
-			hasError = false;
+			return hasError = false;
 		}
 	}
 </script>
 
 <div class="container container-login d-flex justify-content-center w-50 h-75">
-	<!--colocar action no form.-->
 	<form method="POST" class="form-control form-container glass-effect" on:submit={fazerLogin}>
-		<!--
-
-		implementar quando a API já estiver pronta.
-		{#if form?.missing}<p class="error">The email field is required</p>{/if}
-		{#if form?.incorrect}<p class="error">Invalid credentials!</p>{/if}
-		-->
 		<h1 class="text-center title roboto-black" style="user-select: none">Íris</h1>
 
 		<label id="cpfLabel" for="cpfInput" class="mt-3 roboto-bold">CPF</label><br />
@@ -59,21 +52,20 @@
 			use:initializeMask
 		/>
 
-		<label class="mt-3 roboto-bold" id="senhaLabel" for="senhaInput">SENHA</label><br />
+		<label class="mt-3 roboto-black" id="senhaLabel" for="senhaInput">SENHA</label><br />
 		<input
 			class="form-control mb-3 input-group input {senhaInput === '' ? 'input-error' : ''}"
 			id="senhaInput"
-			name="senha"
+			name="password"
 			type="password"
 			bind:value={senhaInput}
 			placeholder=""
 		/>
-
 		{#if hasError}
 			<div transition:fade={{ delay: 150, duration: 200 }} class="container error-container">
 				<p class="error p-2">Preencha os campos corretamente.</p>
 			</div>
-		{/if}
+		{/if} 
 
 		<input type="submit" class="btn btn-primary mt-3 mb-3 roboto-regular" value="Entrar" />
 	</form>

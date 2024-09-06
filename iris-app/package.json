@@ -19,9 +19,7 @@
 		"@sveltejs/adapter-auto": "^3.2.4",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
-		"@types/bcrypt": "^5.0.2",
 		"@types/eslint": "^9.6.0",
-		"drizzle-kit": "^0.24.2",
 		"eslint": "^9.0.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.36.0",
@@ -38,12 +36,8 @@
 	"type": "module",
 	"dependencies": {
 		"@auth/sveltekit": "^1.4.2",
-		"@prisma/client": "^5.19.1",
-		"better-sqlite3": "^11.2.1",
 		"bootstrap": "^5.3.3",
 		"cryptojs": "^2.5.3",
-		"drizzle-orm": "^0.33.0",
-		"drizzle-zod": "^0.5.1",
 		"imask": "^7.6.1"
 	}
 }

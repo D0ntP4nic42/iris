@@ -1,6 +1,5 @@
 <script lang="ts">
-	// usar bcrypt para fazer hash das senhas
-	import { fly, fade } from 'svelte/transition';
+	import { fade } from 'svelte/transition';
 	import IMask from 'imask';
 
 	let cpfInput: string;

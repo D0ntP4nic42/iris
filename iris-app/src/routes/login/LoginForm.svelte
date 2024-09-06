@@ -38,64 +38,36 @@
 </script>
 
 <div class="container container-login d-flex justify-content-center w-50 h-75">
-	<form method="POST" class="form-control form-container glass-effect" on:submit={fazerLogin}>
+	<form method="POST" class="form-control d-grid" on:submit={fazerLogin}>
 		<h1 class="text-center title roboto-black" style="user-select: none">Íris</h1>
 
-		<!--
-		<label id="cpfLabel" for="cpfInput" class="mt-3 roboto-bold">CPF</label><br />
-		<input
-			class="form-control mb-3 input-group input {cpfInput === '' ? 'input-error' : ''}"
-			id="cpfInput"
-			type="text"
-			name="cpf"
-			placeholder="000.000.000-00"
-			bind:value={cpfInput}
-			use:initializeMask
-		/>
-		-->
-
 		<Input
+			id="cpfInput"
 			label="CPF"
 			type="text"
 			name="cpf"
 			placeholder="000.000.000-00"
 			bind:value={cpfInput}
 			mask="000.000.000-00"
+			class="form-control mb-3 input-group input {cpfInput === '' ? 'input-error' : ''}"
 		/>
-
-		<!--
-		<label class="mt-3 roboto-black" id="senhaLabel" for="senhaInput">SENHA</label><br />
-		<input
-			class="form-control mb-3 input-group input {senhaInput === '' ? 'input-error' : ''}"
-			id="senhaInput"
-			name="password"
-			type="password"
-			bind:value={senhaInput}
-			placeholder=""
-		/>
-		-->
 
 		<Input
+			id="passwordInput"
 			label="SENHA"
 			type="password"
 			name="password"
 			bind:value={passwordInput}
 			placeholder=""
+			class="form-control mb-3 input-group input {passwordInput === '' ? 'input-error' : ''}"
 		/>
-		{#if hasError}
-			<div transition:fade={{ delay: 150, duration: 200 }} class="container error-container">
-				<p class="error p-2">Preencha os campos corretamente.</p>
-			</div>
-		{/if} 
-
-		<!--
-		<input type="submit" class="btn btn-primary mt-3 mb-3 roboto-regular" value="Entrar" />
-		-->
 
 		<Input
 			type="submit"
 			value="Entrar"
+			class="btn btn-primary mt-3 mb-3 roboto-regular"
 		/>
+
 	</form>
 </div>
 

@@ -15,3 +15,12 @@ O sistema tem como objetivo auxiliar e substituir parte do trabalho manual reali
 **Vinícius Rodrigues**: Desenvolvimento de todo Front-end relacionado ao acesso de professores ao sistema (Github: ) \
 **Raquel Pereira**: Desenvolvimento de todo Front-end relacionado ao acesso de alunos ao sistema (Github: ) \
 **Leôncio Brito**: Gerenciamento do repositório e assistência de forma geral (Github: )
+
+
+# Demandas:
+
+- Melhor organizar a aplicação em componentes;
+- Fazer o banco de dados local para uso em testes;
+- Implementar a autenticação de usuário;
+
+ - Superforms: https://superforms.rocks/

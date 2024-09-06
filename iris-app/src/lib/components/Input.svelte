@@ -16,7 +16,7 @@
     $: valueLength = value?.length;
 
     // função opcional para implementar mask, exemplo de uso: formatação de cpf
-    export let mask : string | undefined
+    export let mask : string | null | undefined = ''
     $: maskProperties = mask ? mask: '';
     function initializeMask(node: HTMLInputElement) {
         if(maskProperties){
@@ -27,31 +27,32 @@
     }
 </script>
 
-<label class="">
-    <div>{ label }
-        {#if maxlength}
-        <span>
-            {valueLength}/{maxlength}
-        </span>
+<label class="roboto-bold mt-3 user-select-none" >
+    <div>
+        <span>{ label }</span>
+        { #if maxlength }
+            <span>
+                { valueLength }/{ maxlength }
+            </span>
         {/if}
     </div>
 
-    {#if errorMessage}
-        <p>{errorMessage}</p>
+    { #if errorMessage }
+        <p>{ errorMessage }</p>
     {/if}
 
     <input
-            {name}
-            {...{type}}
+            { name }
+            {...{ type }}
             dir="auto"
             bind:value
-            {maxlength}
-            {spellcheck}
-            {placeholder}
-            {autocomplete}
-            aria-label={label}
-            aria-invalid={errorMessage ? 'true' : undefined}
-            {...$$restProps}
+            { maxlength }
+            { spellcheck }
+            { placeholder }
+            { autocomplete }
+            aria-label= { label }
+            aria-invalid= { errorMessage ? 'true' : undefined }
+            { ...$$restProps }
             use:initializeMask
     />
 </label>

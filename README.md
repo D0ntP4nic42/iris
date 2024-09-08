@@ -20,6 +20,4 @@ O sistema tem como objetivo auxiliar e substituir parte do trabalho manual reali
 # Demandas:
 
 - Melhor organizar a aplicação em componentes;
-- Implementar a autenticação de usuário;
-
- - Superforms: https://superforms.rocks/
+- Implementar a autenticação de usuário via server side;

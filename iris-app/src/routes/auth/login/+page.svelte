@@ -1,10 +1,40 @@
 <script lang="ts">
-	import Login from '$lib/components/form/Login.svelte';
+	import Input from '$lib/components/form/Input.svelte';
+	import SuperDebug from "sveltekit-superforms";
+	import { superForm } from "sveltekit-superforms/client";
+	import type { PageData } from "./$types";
+
+	export let data: PageData;
+	const { form, errors, enhance, constraints } = superForm(data.form)
 </script>
 
+
 <div class="background">
-	<div class="container w-75 h-75">
-		<Login/>
+	<div class="container container-login d-flex justify-content-center w-50 h-75">
+		<form method="POST" use:enhance class="form-control p-4 d-grid">
+			<h1 class="text-center title roboto-black" style="user-select: none">Íris</h1>
+			<SuperDebug data={$form}></SuperDebug>
+			<Input
+					label="CPF"
+					type="text"
+					name="cpf"
+					placeholder="000.000.000-00"
+					bind:value={$form.cpf}
+					mask="000.000.000-00"
+					class="form-control input-group input"
+					errorMessage={$errors.cpf}
+			/>
+			<Input
+					label="SENHA"
+					type="password"
+					name="password"
+					bind:value={$form.password}
+					placeholder=""
+					class="form-control input-group input"
+					errorMessage={$errors.password}
+			/>
+			<Input type="submit" value="Entrar" class="btn btn-primary roboto-bold" />
+		</form>
 	</div>
 </div>
 
@@ -24,4 +54,9 @@
 		position: relative;
 		z-index: 2;
 	}
+
+	.title {
+		color: var(--color-primary);
+	}
+
 </style>

@@ -30,16 +30,8 @@
 <label class="roboto-bold mt-3 user-select-none">
 	<div>
 		<span>{label}</span>
-		{#if maxlength}
-			<span>
-				{valueLength}/{maxlength}
-			</span>
-		{/if}
-	</div>
 
-	{#if errorMessage}
-		<p>{errorMessage}</p>
-	{/if}
+	</div>
 
 	<input
 		{name}
@@ -55,4 +47,13 @@
 		{...$$restProps}
 		use:initializeMask
 	/>
+	{#if errorMessage}
+		<small class="roboto-regular error">{errorMessage}</small>
+	{/if}
 </label>
+
+<style>
+	.error {
+		color: #e52207;
+	}
+</style>

@@ -1,4 +1,3 @@
-import type { PageServerLoad } from "./$types";
 import { z } from 'zod';
 import { superValidate } from "sveltekit-superforms/server";
 import {zod} from "sveltekit-superforms/adapters";

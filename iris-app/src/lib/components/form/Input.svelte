@@ -18,7 +18,7 @@
 	// função opcional para implementar mask, exemplo de uso: formatação de cpf
 	export let mask: string | null | undefined = '';
 	$: maskProperties = mask ? mask : '';
-	function initializeMask(node: HTMLInputElement) {
+	export function initializeMask(node: HTMLInputElement) {
 		if (maskProperties) {
 			IMask(node, {
 				mask: maskProperties
@@ -46,6 +46,7 @@
 		aria-invalid={errorMessage ? 'true' : undefined}
 		{...$$restProps}
 		use:initializeMask
+
 	/>
 	{#if errorMessage}
 		<small class="roboto-regular error">{errorMessage}</small>

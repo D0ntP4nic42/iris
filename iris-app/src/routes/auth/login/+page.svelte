@@ -19,6 +19,7 @@
 					type="text"
 					name="cpf"
 					placeholder="000.000.000-00"
+					maxlength={14}
 					bind:value={$form.cpf}
 					mask="000.000.000-00"
 					class="form-control input-group input"

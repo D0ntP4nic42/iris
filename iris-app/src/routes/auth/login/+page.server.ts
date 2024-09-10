@@ -3,7 +3,7 @@ import { superValidate } from "sveltekit-superforms/server";
 import {zod} from "sveltekit-superforms/adapters";
 import {fail} from "@sveltejs/kit";
 
-const userSchema = z.object({
+const loginSchema = z.object({
     cpf: z.string()
         .refine((cpf: string) => {
         if (typeof cpf !== "string") return false;
@@ -20,13 +20,13 @@ const userSchema = z.object({
 })
 
 export const load = async (event) => {
-    const form = await superValidate(event, zod(userSchema))
+    const form = await superValidate(event, zod(loginSchema))
     return { form }
 }
 
 export const actions = {
     default: async (event) => {
-        const form = await superValidate(event, zod(userSchema));
+        const form = await superValidate(event, zod(loginSchema));
         if(!form.valid){
             return fail(400, {
                 form

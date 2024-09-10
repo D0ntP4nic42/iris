@@ -39,3 +39,4 @@ O projeto agora está rodando, basta abrir o navegador no localhost com a porta 
 
 - Melhor organizar a aplicação em componentes;
 - Implementar a autenticação de usuário via server side;
+- Implementar confirmação de senha no registro, além de levantar o que precisamos efetivamente para o registro de usuários novos.

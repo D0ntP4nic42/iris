@@ -13,9 +13,9 @@
 </script>
 {#if ready}
 	<div class="background">
-		<div transition:fly={{ y: -200, duration: 1500 }} class="container container-login d-flex justify-content-center w-50 h-75">
+		<div class="container container-login d-flex justify-content-center w-50 h-75">
 			<form method="POST" class="form-control p-4 d-grid">
-				<h1 class="text-center title roboto-black" style="user-select: none">Íris</h1>
+				<h1 class="text-center title roboto-black" style="user-select: none">Login</h1>
 				<SuperDebug data={$form}></SuperDebug>
 				<Input
 						label="CPF"

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { superValidate } from "sveltekit-superforms/server";
 import {zod} from "sveltekit-superforms/adapters";
-import {fail} from "@sveltejs/kit";
+import {fail, redirect} from "@sveltejs/kit";
 
 const loginSchema = z.object({
     cpf: z.string()
@@ -25,14 +25,19 @@ export const load = async (event) => {
 }
 
 export const actions = {
-    default: async (event) => {
+    login: async (event) => {
         const form = await superValidate(event, zod(loginSchema));
-        if(!form.valid){
-            return fail(400, {
-                form
+        if(form.valid){
+            const { cookies, locals } = event
+            cookies.set("auth", "tokenProfessor", {
+                path:"/",
+                httpOnly: true,
+                sameSite: "strict",
+                maxAge: 60*60*24 // 7 dias
             })
+            throw redirect(303, "/professor/home")
+        } else {
+            return fail(400, { form })
         }
-
-        return { form }
     }
 }

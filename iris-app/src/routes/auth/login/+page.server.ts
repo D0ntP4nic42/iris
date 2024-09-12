@@ -29,7 +29,7 @@ export const actions = {
         const form = await superValidate(event, zod(loginSchema));
         if(form.valid){
             const { cookies, locals } = event
-            cookies.set("auth", "tokenProfessor", {
+                cookies.set("auth", "tokenCoordenador", {
                 path:"/",
                 httpOnly: true,
                 sameSite: "strict",

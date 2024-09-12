@@ -5,6 +5,8 @@ export const authenticateUser = (event: RequestEvent) => {
 
     const token = cookies.get("auth")
 
+
+    // com finalidade apenas de testes.
     if(token === "tokenProfessor"){
         const user = {
             nome: "Gerival",

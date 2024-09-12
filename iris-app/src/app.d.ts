@@ -1,6 +1,8 @@
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 
+
+// podemos colocar interface de professor, coordenador, e admin.
 type User = {
 	nome: string,
 	role: string

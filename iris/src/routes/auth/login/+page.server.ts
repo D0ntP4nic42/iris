@@ -1,7 +1,7 @@
 import {message, superValidate} from 'sveltekit-superforms'
 import { zod } from 'sveltekit-superforms/adapters'
 import { z } from 'zod';
-import {fail} from "@sveltejs/kit";
+import {fail, redirect} from "@sveltejs/kit";
 
 const loginSchema = z.object({
     cpf: z.string()
@@ -38,7 +38,7 @@ export const actions = {
         const form = await superValidate(request, zod(loginSchema));
 
         if(form.valid){
-            console.log('ok')
+            redirect(303, '/protected/professor')
         } else {
             return fail(400, { form })
         }

@@ -33,7 +33,7 @@ export const load = async () => {
 }
 
 export const actions = {
-    login: async ({ request }) => {
+    default: async ({ request }) => {
         console.log(request);
         const form = await superValidate(request, zod(loginSchema));
 

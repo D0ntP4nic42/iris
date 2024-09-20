@@ -39,5 +39,8 @@
 		"vitest": "^2.0.0",
 		"zod": "^3.23.8"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@imask/svelte": "^7.6.1"
+	}
 }

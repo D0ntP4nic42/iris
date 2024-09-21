@@ -1,2 +1,12 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+
+</script>
+
+<div data-theme="irisWhite">
+    <div class="prose text-center m-auto">
+        <div class="m-10">
+            <h1 class="text-primary">Gerenciador Acadêmico CEDLAN</h1>
+        </div>
+        <a class="btn btn-primary link-hover" href="/auth/login">Login</a>
+    </div>
+</div>

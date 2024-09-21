@@ -17,9 +17,10 @@
 </div>
 <div data-theme="irisWhite" class="justify-center">
     <div class="prose m-auto select-none">
-        <h1 class="text-center text-primary">Íris</h1>
+        <h1 class="text-center text-primary m-10">Login</h1>
         <form method="post" class="form-control">
             <div class="m-5">
+                <label class="label-text" for="cpf">Cpf</label>
                 <label class="input input-bordered flex items-center gap-2">
                     <input
                             name="cpf"
@@ -44,6 +45,7 @@
             </div>
 
             <div class="m-5">
+                <label class="label-text" for="Senha">Senha</label>
                 <label class="input input-bordered flex items-center gap-2">
                     <input
                             name="password"

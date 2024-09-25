@@ -1,9 +1,14 @@
 import {message, superValidate} from 'sveltekit-superforms'
 import { zod } from 'sveltekit-superforms/adapters'
-import { z } from 'zod';
-import {type Actions, fail, redirect} from "@sveltejs/kit";
+import {string, z} from 'zod';
+import bcrypt from 'bcrypt';
+import {fail, redirect} from "@sveltejs/kit";
 import {db} from "$lib/database";
-import bcrypt from "bcrypt";
+
+enum Roles {
+    COORDENADOR = 'COORDENADOR',
+    PROFESSOR = 'PROFESSOR'
+}
 
 const loginSchema = z.object({
     cpf: z.string()
@@ -22,6 +27,7 @@ const loginSchema = z.object({
     // VALIDAR A SENHA PELO BACKEND.
 
     password: z.string()
+        .min(8, { message: "A senha precisa de pelo menos 8 caracteres." }),
 })
 
 export const load = async () => {
@@ -34,45 +40,40 @@ export const load = async () => {
     return { form };
 }
 
-export const actions : Actions = {
-    login: async ({ request, cookies }) => {
+export const actions = {
+    register: async ({ request }) => {
+        console.log(request);
         const form = await superValidate(request, zod(loginSchema));
+
+        console.log(form.data)
+
         const username = form.data.cpf;
         const password = form.data.password;
 
         if(form.valid){
 
-            const user = await db.user.findUnique({
-                where: {
-                    username: username
+            const userExists = await db.user.findUnique({
+                where: { username: username }
+            })
+
+            if(userExists){
+                return fail(400, { user: true });
+            }
+
+            await db.user.create({
+                data: {
+                    username: username,
+                    passwordHash: await bcrypt.hash(password, 10),
+                    userAuthToken: crypto.randomUUID(),
+                    role: { connect: { name: Roles.PROFESSOR } }
                 }
             })
-            if(!user){
-                return fail(400, { credentials: true })
-            }
 
-            const userPassword = await bcrypt.compare(password, user.passwordHash);
-
-            if(!userPassword){
-                return fail(400, { credentials: true })
-            }
-
-            const authenticatedUser = await db.user.update({
-                where: { username: user.username },
-                data: { userAuthToken: crypto.randomUUID() }
-            })
-
-            cookies.set('session', authenticatedUser.userAuthToken, {
-                path: '/',
-                httpOnly: true,
-                sameSite: 'strict',
-                secure: process.env.NODE_ENV === 'production',
-                maxAge: 60 * 60 * 30 * 24
-            })
-
-            redirect(303, '/protected/professor');
+            redirect(303, '/auth/login')
         } else {
             return fail(400, { form })
         }
+
+
     }
 }

@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { PageData } from "./$types";
-    import SuperDebug, { superForm } from "sveltekit-superforms";
-    import { imask } from '@imask/svelte';
+    import SuperDebug, {superForm} from "sveltekit-superforms";
+    import { imask } from "@imask/svelte";
 
     export let data: PageData
     const { form, errors } = superForm(data.form);
@@ -10,16 +10,18 @@
         mask: '000{.}000{.}000{-}00',
         lazy:true
     }
+
 </script>
 
 <div class="m-10">
     <SuperDebug data={$form}></SuperDebug>
 </div>
+
 <div class="justify-center">
     <div class="prose m-auto select-none">
-        <h1 class="text-center text-primary m-10">Login</h1>
-        <form method="post" action="?/login" class="form-control">
-            <div class="m-5">
+        <h1 class="text-primary text-center">Registrar</h1>
+        <form method="post" action="?/register" class="form-control">
+            <div class="">
                 <label class="label-text" for="cpf">CPF</label>
                 <label class="input input-bordered flex items-center gap-2">
                     <input
@@ -44,7 +46,7 @@
                 {/if}
             </div>
 
-            <div class="m-5">
+            <div class="">
                 <label class="label-text" for="Senha">Senha</label>
                 <label class="input input-bordered flex items-center gap-2">
                     <input
@@ -66,7 +68,7 @@
                     <p class="text-error text-sm">{$errors.password}</p>
                 {/if}
             </div>
-            <button class="btn btn-primary m-5" type="submit">Entrar</button>
+            <button class="btn btn-primary m-5" type="submit">Registrar</button>
         </form>
     </div>
 </div>

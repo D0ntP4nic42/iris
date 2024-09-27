@@ -6,7 +6,8 @@ O sistema tem como objetivo auxiliar e substituir parte do trabalho manual reali
 
 ## Tecnologias
 - **Svelte**
-- **Bootstrap**
+- **Tailwind**
+- **DaisyUI**
 - **Git**
 
 ## Equipe
@@ -34,9 +35,3 @@ Seguido de:
 npm run dev
 ```
 O projeto agora está rodando, basta abrir o navegador no localhost com a porta que aparece no terminal.
-
-# Demandas:
-
-- Melhor organizar a aplicação em componentes;
-- Implementar a autenticação de usuário via server side;
-- Implementar confirmação de senha no registro, além de levantar o que precisamos efetivamente para o registro de usuários novos.

@@ -1,4 +1,9 @@
 <script>
+    // Essa é a página geral da aplicação, servindo para colocar a navegação do usuário
+    // TODO:
+    // Devemos fazer uma aba layout para navegação específica para cada rota dependendo
+    // do nível de acesso do usuário.
+
     import "tailwindcss/tailwind.css";
     import { page } from '$app/stores';
 </script>
@@ -14,9 +19,8 @@
         {/if}
 
         {#if $page.data.user}
-            <a class="link-hover" href="/protected/professor">Professor</a>
-            <form action="?/logout" method="post">
-                <button class="btn btn-primary" type="submit">LOGOUT</button>
+            <form action="/auth/logout" method="post">
+                <button class="link hover ml-10 mr-10" type="submit">LOGOUT</button>
             </form>
         {/if}
     </nav>

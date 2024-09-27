@@ -1,18 +1,14 @@
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
-declare global {
-	namespace App {
-		// interface Error {}
-		interface Locals {
-			user: {
-				name: string;
-				role: string;
-			}
+declare namespace App {
+	interface Locals {
+		user: {
+			name: string
+			role: string
 		}
-		// interface PageData {}
-		// interface PageState {}
-		// interface Platform {}
 	}
-}
 
-export { Locals };
+	// interface PageData {}
+
+	// interface Platform {}
+}

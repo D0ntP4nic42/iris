@@ -30,11 +30,15 @@ const loginSchema = z.object({
         .min(8, { message: "A senha precisa de pelo menos 8 caracteres." }),
 })
 
-export const load = async () => {
+export const load = async ({ locals }) => {
 
     // TODO:
     // AQUI DEVEMOS COLOCAR A CHAMADA DA API DO BACKEND,
     // ASSIM VALIDANDO O FORM E RETORNANDO ELE.
+
+    if(locals.user){
+        redirect(302, '/protected/professor')
+    }
 
     const form = await superValidate(zod(loginSchema));
     return { form };
@@ -42,38 +46,36 @@ export const load = async () => {
 
 export const actions = {
     register: async ({ request }) => {
-        console.log(request);
+
         const form = await superValidate(request, zod(loginSchema));
-
-        console.log(form.data)
-
         const username = form.data.cpf;
         const password = form.data.password;
 
-        if(form.valid){
+        if(!form.valid) {
 
-            const userExists = await db.user.findUnique({
-                where: { username: username }
-            })
-
-            if(userExists){
-                return fail(400, { user: true });
-            }
-
-            await db.user.create({
-                data: {
-                    username: username,
-                    passwordHash: await bcrypt.hash(password, 10),
-                    userAuthToken: crypto.randomUUID(),
-                    role: { connect: { name: Roles.PROFESSOR } }
-                }
-            })
-
-            redirect(303, '/auth/login')
-        } else {
-            return fail(400, { form })
+            return fail(400, {form})
         }
 
+        const userExists = await db.user.findUnique({
 
+            where: { username: username }
+        })
+
+        if(userExists){
+
+            return fail(400, { user: true });
+        }
+
+        await db.user.create({
+
+            data: {
+                username: username,
+                passwordHash: await bcrypt.hash(password, 10),
+                userAuthToken: crypto.randomUUID(),
+                role: { connect: { name: Roles.PROFESSOR } }
+            }
+        })
+
+        redirect(303, '/auth/login')
     }
 }

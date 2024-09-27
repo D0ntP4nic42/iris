@@ -24,11 +24,18 @@ const loginSchema = z.object({
     password: z.string()
 })
 
-export const load = async () => {
+export const load = async ({ locals }) => {
 
     // TODO:
     // AQUI DEVEMOS COLOCAR A CHAMADA DA API DO BACKEND,
     // ASSIM VALIDANDO O FORM E RETORNANDO ELE.
+
+
+    // caso esteja validado, irá ser redirecionado para sua aba respectiva.
+    if(locals.user){
+        redirect(302, '/protected/professor')
+    }
+
 
     const form = await superValidate(zod(loginSchema));
     return { form };
@@ -36,43 +43,48 @@ export const load = async () => {
 
 export const actions : Actions = {
     login: async ({ request, cookies }) => {
+
         const form = await superValidate(request, zod(loginSchema));
         const username = form.data.cpf;
         const password = form.data.password;
 
-        if(form.valid){
+        if(!form.valid){
 
-            const user = await db.user.findUnique({
-                where: {
-                    username: username
-                }
-            })
-            if(!user){
-                return fail(400, { credentials: true })
-            }
-
-            const userPassword = await bcrypt.compare(password, user.passwordHash);
-
-            if(!userPassword){
-                return fail(400, { credentials: true })
-            }
-
-            const authenticatedUser = await db.user.update({
-                where: { username: user.username },
-                data: { userAuthToken: crypto.randomUUID() }
-            })
-
-            cookies.set('session', authenticatedUser.userAuthToken, {
-                path: '/',
-                httpOnly: true,
-                sameSite: 'strict',
-                secure: process.env.NODE_ENV === 'production',
-                maxAge: 60 * 60 * 30 * 24
-            })
-
-            redirect(303, '/protected/professor');
-        } else {
             return fail(400, { form })
         }
+
+        const user = await db.user.findUnique({
+            where: {
+                username: username
+            }
+        })
+
+        if(!user){
+
+            return fail(400, { credentials: true })
+        }
+
+        const userPassword = await bcrypt.compare(password, user.passwordHash);
+        if(!userPassword){
+
+            return fail(400, { credentials: true })
+        }
+
+        const authenticatedUser = await db.user.update({
+
+            where: { username: user.username },
+            data: { userAuthToken: crypto.randomUUID() }
+        })
+
+        cookies.set('session', authenticatedUser.userAuthToken, {
+
+            path: '/',
+            httpOnly: true,
+            sameSite: 'strict',
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 60 * 60 * 30 * 24
+        })
+
+        redirect(303, '/protected/professor');
     }
 }

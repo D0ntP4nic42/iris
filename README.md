@@ -11,7 +11,7 @@ O sistema tem como objetivo auxiliar e substituir parte do trabalho manual reali
 - **Git**
 
 ## Equipe
-**Luiz Gustavo**: Design geral do sistema, UI/UX e gerenciamento de requisitos (Github: https://github.com/1917dc) \
+**Luiz Gustavo**: Programação geral do front end, UI/UX e gerenciamento de requisitos (Github: https://github.com/1917dc) \
 **Karoline Rodrigues**: Desenvolvimento de todo Front-end relacionado ao acesso de administradores ao sistema (Github: ) \
 **Vinícius Rodrigues**: Desenvolvimento de todo Front-end relacionado ao acesso de professores ao sistema (Github: ) \
 **Raquel Pereira**: Desenvolvimento de todo Front-end relacionado ao acesso de alunos ao sistema (Github: ) \

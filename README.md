@@ -6,7 +6,8 @@ O sistema tem como objetivo auxiliar e substituir parte do trabalho manual reali
 
 ## Tecnologias
 - **Svelte**
-- **Bootstrap**
+- **Tailwin**
+- **DaisyUI**
 - **Git**
 
 ## Equipe

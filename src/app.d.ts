@@ -3,6 +3,7 @@
 declare namespace App {
 	interface Locals {
 		user: {
+			cpf: string
 			name: string
 			role: string
 		}

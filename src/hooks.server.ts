@@ -23,7 +23,6 @@ export const handle: Handle = async ({ event, resolve }) => {
             name: user.username,
             role: user.role.name,
         }
-
     }
 
     return await resolve(event);

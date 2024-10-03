@@ -1,7 +1,9 @@
 import {message, superValidate} from 'sveltekit-superforms'
 import { zod } from 'sveltekit-superforms/adapters'
 import { z } from 'zod';
-import {fail, redirect} from "@sveltejs/kit";
+import {type Actions, fail, redirect, type RequestEvent} from "@sveltejs/kit";
+import { BACKEND_URL } from '$env/static/private';
+import type {User} from "$lib/types/User";
 
 const loginSchema = z.object({
     cpf: z.string()
@@ -16,9 +18,6 @@ const loginSchema = z.object({
             return rest(10) === cpfDigits[9] && rest(11) === cpfDigits[10];
         }, "Digite um CPF válido."),
 
-    // TODO:
-    // VALIDAR A SENHA PELO BACKEND.
-
     password: z.string()
 })
 
@@ -26,23 +25,51 @@ export const load = async () => {
 
     // TODO:
     // AQUI DEVEMOS COLOCAR A CHAMADA DA API DO BACKEND,
-    // ASSIM VALIDANDO O FORM E RETORNANDO ELE.
 
     const form = await superValidate(zod(loginSchema));
     return { form };
 }
 
-export const actions = {
-    default: async ({ request }) => {
-        console.log(request);
+export const actions : Actions = {
+    login: async ({cookies, request } : RequestEvent) => {
         const form = await superValidate(request, zod(loginSchema));
 
-        if(form.valid){
-            redirect(303, '/protected/professor')
-        } else {
-            return fail(400, { form })
+        if(!form.valid){
+            return fail(400, { form: form })
         }
 
+        const { cpf, password } = form.data;
+        const authResponse = await fetch(BACKEND_URL + 'auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify({
+                cpf: cpf,
+                password: password
+            })
+        })
 
+        let loginResponse = {
+            error: false,
+            message: ''
+        }
+
+        if(!authResponse.ok){
+            loginResponse = {
+                error: true,
+                message: 'As credenciais de CPF ou senha estão incorretos.'
+            }
+        }
+        const user : User = await authResponse.json();
+
+        cookies.set('token', user.token, {
+            path: '/',
+            httpOnly: true,
+            maxAge: 60*60*3,
+            sameSite: 'strict'
+        })
+
+        throw redirect(302, '/protected/professor')
     }
 }

@@ -18,7 +18,7 @@
 <div class="justify-center">
     <div class="prose m-auto select-none">
         <h1 class="text-center text-primary m-10">Login</h1>
-        <form method="post" class="form-control">
+        <form method="post" action="?/login" class="form-control">
             <div class="m-5">
                 <label class="label-text" for="cpf">CPF</label>
                 <label class="input input-bordered flex items-center gap-2">

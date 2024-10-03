@@ -6,11 +6,12 @@ O sistema tem como objetivo auxiliar e substituir parte do trabalho manual reali
 
 ## Tecnologias
 - **Svelte**
-- **Bootstrap**
+- **Tailwind**
+- **DaisyUI**
 - **Git**
 
 ## Equipe
-**Luiz Gustavo**: Design geral do sistema, UI/UX e gerenciamento de requisitos (Github: https://github.com/1917dc) \
+**Luiz Gustavo**: Programação geral do front end, UI/UX e gerenciamento de requisitos (Github: https://github.com/1917dc) \
 **Karoline Rodrigues**: Desenvolvimento de todo Front-end relacionado ao acesso de administradores ao sistema (Github: ) \
 **Vinícius Rodrigues**: Desenvolvimento de todo Front-end relacionado ao acesso de professores ao sistema (Github: ) \
 **Raquel Pereira**: Desenvolvimento de todo Front-end relacionado ao acesso de alunos ao sistema (Github: ) \
@@ -34,9 +35,3 @@ Seguido de:
 npm run dev
 ```
 O projeto agora está rodando, basta abrir o navegador no localhost com a porta que aparece no terminal.
-
-# Demandas:
-
-- Melhor organizar a aplicação em componentes;
-- Implementar a autenticação de usuário via server side;
-- Implementar confirmação de senha no registro, além de levantar o que precisamos efetivamente para o registro de usuários novos.

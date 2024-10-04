@@ -31,7 +31,7 @@ export const load = async () => {
 }
 
 export const actions : Actions = {
-    login: async ({cookies, request } : RequestEvent) => {
+    login: async ({ cookies, request } : RequestEvent) => {
         const form = await superValidate(request, zod(loginSchema));
 
         if(!form.valid){
@@ -66,10 +66,20 @@ export const actions : Actions = {
         cookies.set('token', user.token, {
             path: '/',
             httpOnly: true,
-            maxAge: 60*60*3,
+            maxAge: 60*60*24,
             sameSite: 'strict'
-        })
+        });
 
-        throw redirect(302, '/protected/professor')
+        cookies.set('name', user.name, {
+            path: '/',
+            httpOnly: true,
+            maxAge: 60*60*24,
+            sameSite: "strict"
+        });
+
+        if(user.role === 'professor') return redirect(302, '/protected/professor');
+        if(user.role === 'coordenador') return redirect(302, '/protected/coordenador');
+
+        return redirect(302, '/protected/professor');
     }
 }

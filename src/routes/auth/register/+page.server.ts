@@ -1,7 +1,8 @@
+import type { PageServerLoad } from './$types';
 import {message, setError, superValidate} from 'sveltekit-superforms'
 import { zod } from 'sveltekit-superforms/adapters'
 import { z } from 'zod';
-import {type Actions, fail, redirect, type RequestEvent} from "@sveltejs/kit";
+import {type Actions, error, fail, redirect, type RequestEvent} from "@sveltejs/kit";
 import { BACKEND_URL } from '$env/static/private';
 import type {User} from "$lib/types/User";
 
@@ -17,54 +18,44 @@ const loginSchema = z.object({
             };
             return rest(10) === cpfDigits[9] && rest(11) === cpfDigits[10];
         }, "Digite um CPF válido."),
-
-    password: z.string()
+    password: z.string().min(8, { message: "A senha deve conter ao menos 8 caracteres" }),
+    confirm: z.string().min(8, { message: "A senha deve conter ao menos 8 caracteres" }),
+    name: z.string().min(15, { message: "O nome deve conter ao menos 15 caracteres." })
 })
+    .refine((data) => data.password == data.confirm, "As senhas não coincidem");
 
-export const load = async () => {
-
-    // TODO:
-    // AQUI DEVEMOS COLOCAR A CHAMADA DA API DO BACKEND,
+export const load = (async () => {
 
     const form = await superValidate(zod(loginSchema));
     return { form };
-}
+}) satisfies PageServerLoad;
 
-export const actions : Actions = {
-    login: async ({ cookies, request } : RequestEvent) => {
+export const actions: Actions = {
+    register: async ({ request }) => {
         const form = await superValidate(request, zod(loginSchema));
-
+        
         if(!form.valid){
             return fail(400, { form: form })
         }
 
-        const { cpf, password } = form.data;
-        const response = await fetch(BACKEND_URL + 'auth/login', {
+        const { cpf, password, name } = form.data;
+
+        const response = await fetch(BACKEND_URL + 'auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json'
             },
             body: JSON.stringify({
+                name: name,
                 cpf: cpf,
-                password: password
+                password: password,
             })
         })
 
         if(!response.ok){
-            return setError(form, 'password', 'CPF ou senha estão incorretos.');
+            return setError(form, 'cpf', 'O CPF já existe dentro do sistema.');
         }
 
-        const user : User = await response.json();
-        cookies.set('user', JSON.stringify(user), {
-            path: '/',
-            httpOnly: true,
-            maxAge: 60*60*24,
-            sameSite: 'strict'
-        });
-
-        if(user.role === 'PROFESSOR') return redirect(302, '/protected/professor');
-        if(user.role === 'COORDENADOR') return redirect(302, '/protected/coordenador');
-
-        return redirect(302, '/protected/professor');
+        return redirect(302, '/auth/login');
     }
 }

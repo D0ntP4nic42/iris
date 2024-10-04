@@ -1,4 +1,6 @@
 <script lang="ts">
+    // TODO:
+    // passar essa tela de login apenas para edição dos coordenadores.
     import type {PageData} from "../../../../.svelte-kit/types/src/routes/auth/login/$types";
     import SuperDebug, {superForm} from "sveltekit-superforms";
     import { imask } from '@imask/svelte';

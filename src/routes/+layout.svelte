@@ -10,7 +10,6 @@
 <div class="navbar">
     {#if !$page.data.user}
         <a href="/auth/login" class="btn btn-ghost text-x1">LOGIN</a>
-        <a href="/auth/register" class="btn btn-ghost text-x1">REGISTRAR</a>    
     {/if}
 
     {#if $page.data.user}

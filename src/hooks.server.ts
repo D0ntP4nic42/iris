@@ -1,18 +1,28 @@
-import type {Handle} from "@sveltejs/kit";
+import {type Handle, redirect} from "@sveltejs/kit";
+import type {User} from "$lib/types/User";
 
 export const handle = (async ({ event, resolve }) => {
-    const token = event.cookies.get('token') ?? '';
-    const name = event.cookies.get('name') ?? ''
+    const userCookies = event.cookies.get('user');
+    let user : User | null = null;
 
-    if(!token){
-        return await resolve(event);
+    try{
+        if (typeof userCookies === "string") {
+            user = JSON.parse(userCookies);
+        }
+    } catch(e){
+        console.error(`Error parsing user cookie: ${e}`)
+    }
+
+    if(!user){
+        return resolve(event);
     }
 
     event.locals.user = {
-        name: name,
-        token: token,
-        role: 'Professor'
+        name: user.name,
+        token: user.token,
+        role: 'PROFESSOR'
     }
 
-    return await resolve(event);
+
+    return resolve(event);
 }) satisfies Handle;

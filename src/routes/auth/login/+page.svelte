@@ -12,6 +12,10 @@
     }
 </script>
 
+<svelte:head>
+    <title>Login</title>
+</svelte:head>
+
 <div class="m-10">
     <SuperDebug data={$form}></SuperDebug>
 </div>

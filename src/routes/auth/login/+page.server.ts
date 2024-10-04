@@ -39,7 +39,7 @@ export const actions : Actions = {
         }
 
         const { cpf, password } = form.data;
-        const authResponse = await fetch(BACKEND_URL + 'auth/login', {
+        const response = await fetch(BACKEND_URL + 'auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json'
@@ -50,35 +50,20 @@ export const actions : Actions = {
             })
         })
 
-        let loginResponse = {
-            error: false,
-            message: ''
+        if(!response.ok){
+            return fail(400, { credentials: true });
         }
 
-        if(!authResponse.ok){
-            loginResponse = {
-                error: true,
-                message: 'As credenciais de CPF ou senha estão incorretos.'
-            }
-        }
-        const user : User = await authResponse.json();
-
-        cookies.set('token', user.token, {
+        const user : User = await response.json();
+        cookies.set('user', JSON.stringify(user), {
             path: '/',
             httpOnly: true,
             maxAge: 60*60*24,
             sameSite: 'strict'
         });
 
-        cookies.set('name', user.name, {
-            path: '/',
-            httpOnly: true,
-            maxAge: 60*60*24,
-            sameSite: "strict"
-        });
-
-        if(user.role === 'professor') return redirect(302, '/protected/professor');
-        if(user.role === 'coordenador') return redirect(302, '/protected/coordenador');
+        if(user.role === 'PROFESSOR') return redirect(302, '/protected/professor');
+        if(user.role === 'COORDENADOR') return redirect(302, '/protected/coordenador');
 
         return redirect(302, '/protected/professor');
     }

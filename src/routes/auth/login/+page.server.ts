@@ -1,4 +1,4 @@
-import {message, superValidate} from 'sveltekit-superforms'
+import {message, setError, superValidate} from 'sveltekit-superforms'
 import { zod } from 'sveltekit-superforms/adapters'
 import { z } from 'zod';
 import {type Actions, fail, redirect, type RequestEvent} from "@sveltejs/kit";
@@ -51,7 +51,7 @@ export const actions : Actions = {
         })
 
         if(!response.ok){
-            return fail(400, { credentials: true });
+            return setError(form, 'password', 'CPF ou senha estão incorretos.');
         }
 
         const user : User = await response.json();

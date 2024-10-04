@@ -1,5 +1,5 @@
 import type { PageServerLoad } from './$types';
-import {message, superValidate} from 'sveltekit-superforms'
+import {message, setError, superValidate} from 'sveltekit-superforms'
 import { zod } from 'sveltekit-superforms/adapters'
 import { z } from 'zod';
 import {type Actions, error, fail, redirect, type RequestEvent} from "@sveltejs/kit";
@@ -19,9 +19,10 @@ const loginSchema = z.object({
             return rest(10) === cpfDigits[9] && rest(11) === cpfDigits[10];
         }, "Digite um CPF válido."),
     password: z.string().min(8, { message: "A senha deve conter ao menos 8 caracteres" }),
+    confirm: z.string().min(8, { message: "A senha deve conter ao menos 8 caracteres" }),
     name: z.string().min(15, { message: "O nome deve conter ao menos 15 caracteres." })
 })
-
+    .refine((data) => data.password == data.confirm, "As senhas não coincidem");
 
 export const load = (async () => {
 
@@ -52,7 +53,7 @@ export const actions: Actions = {
         })
 
         if(!response.ok){
-            return fail(400, { message: "As credenciais já existem dentro do sistema." });
+            return setError(form, 'cpf', 'O CPF já existe dentro do sistema.');
         }
 
         return redirect(302, '/auth/login');

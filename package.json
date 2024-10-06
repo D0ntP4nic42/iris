@@ -42,8 +42,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@imask/svelte": "^7.6.1",
-		"svelte-french-toast": "^1.2.0",
-		"svelte-legos": "^0.2.5"
+		"@imask/svelte": "^7.6.1"
 	}
 }

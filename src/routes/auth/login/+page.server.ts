@@ -51,6 +51,9 @@ export const actions : Actions = {
         })
 
         if(!response.ok){
+            // TODO:
+            // Colocar o mesmo tratamento de exceções
+            // que foi feito na página de registro dos coordenadores.
             return setError(form, 'password', 'CPF ou senha estão incorretos.');
         }
 
@@ -62,8 +65,8 @@ export const actions : Actions = {
             sameSite: 'strict'
         });
 
-        if(user.role === 'PROFESSOR') return redirect(302, '/protected/professor');
-        if(user.role === 'COORDENADOR') return redirect(302, '/protected/coordenador');
+        if(user.typeUser === 'PROFESSOR') return redirect(302, '/protected/professor');
+        if(user.typeUser === 'COORDENADOR') return redirect(302, '/protected/coordenador');
 
         return redirect(302, '/protected/professor');
     }

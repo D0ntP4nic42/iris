@@ -1,14 +1,16 @@
 <script lang="ts">
     // TODO:
     // passar essa tela de login apenas para edição dos coordenadores.
-    import type {PageData} from "../../../../.svelte-kit/types/src/routes/auth/login/$types";
+    import type {PageData} from "./$types";
     import SuperDebug, {superForm} from "sveltekit-superforms";
     import { imask } from '@imask/svelte';
     import { page } from '$app/stores'
     import {error} from "@sveltejs/kit";
 
     export let data: PageData
-    const { form, errors } = superForm(data.form);
+    const { form, errors, enhance, message } = superForm(data.form, {
+        resetForm: true,
+    });
 
     const options = {
         mask: '000{.}000{.}000{-}00',
@@ -23,10 +25,12 @@
 <div class="m-10">
     <SuperDebug data={$form}></SuperDebug>
 </div>
+
+
 <div class="justify-center">
     <div class="prose m-auto select-none">
         <h1 class="text-center text-primary m-10">Registrar</h1>
-        <form method="post" action="?/register" class="form-control">
+        <form method="post" action="?/register" class="form-control" use:enhance>
             <div class="m-3">
                 <label class="label-text" for="cpf">CPF<small>*</small></label>
                 <label class="input input-bordered flex items-center gap-2">

@@ -6,6 +6,7 @@ import {type Actions, error, fail, redirect, type RequestEvent} from "@sveltejs/
 import { BACKEND_URL } from '$env/static/private';
 import type {User} from "$lib/types/User";
 
+
 const loginSchema = z.object({
     cpf: z.string()
         .refine((cpf: string) => {
@@ -19,8 +20,8 @@ const loginSchema = z.object({
             return rest(10) === cpfDigits[9] && rest(11) === cpfDigits[10];
         }, "Digite um CPF válido."),
     password: z.string().min(8, { message: "A senha deve conter ao menos 8 caracteres" }),
-    confirm: z.string().min(8, { message: "A senha deve conter ao menos 8 caracteres" }),
-    name: z.string().min(15, { message: "O nome deve conter ao menos 15 caracteres." })
+    confirm: z.string(),
+    name: z.string()
 })
     .refine((data) => data.password == data.confirm, "As senhas não coincidem");
 
@@ -40,10 +41,13 @@ export const actions: Actions = {
 
         const { cpf, password, name } = form.data;
 
-        const response = await fetch(BACKEND_URL + 'auth/register', {
+        const response = await fetch(BACKEND_URL + 'auth/register/professor', {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json'
+                // TODO:
+                // assim que o encapsulamento da rota for implementado
+                // passar o token no header da requisição
             },
             body: JSON.stringify({
                 name: name,
@@ -53,9 +57,12 @@ export const actions: Actions = {
         })
 
         if(!response.ok){
-            return setError(form, 'cpf', 'O CPF já existe dentro do sistema.');
+            return setError(form, 'cpf', 'O CPF já está cadastrado', {
+                overwrite: true,
+                status: 409
+            })
         }
 
-        return redirect(302, '/auth/login');
+        return message(form, { status: 'success', text: 'Usuário cadastrado com sucesso' })
     }
 }

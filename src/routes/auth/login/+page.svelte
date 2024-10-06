@@ -4,7 +4,7 @@
     import { imask } from '@imask/svelte';
 
     export let data: PageData
-    const { form, errors } = superForm(data.form);
+    const { form, errors, enhance } = superForm(data.form);
 
     const options = {
         mask: '000{.}000{.}000{-}00',
@@ -21,7 +21,6 @@
 </div>
 <div class="justify-center">
     <div class="prose m-auto select-none">
-        <h1 class="text-center text-primary m-10">Login</h1>
         <form method="post" action="?/login" class="form-control">
             <div class="m-5">
                 <label class="label-text" for="cpf">CPF</label>

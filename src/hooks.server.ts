@@ -20,7 +20,7 @@ export const handle = (async ({ event, resolve }) => {
     event.locals.user = {
         name: user.name,
         token: user.token,
-        role: 'PROFESSOR'
+        role: user.role
     }
 
 

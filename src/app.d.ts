@@ -11,6 +11,11 @@ declare global {
 		interface PageData {}
 		interface PageState {}
 		interface Platform {}
+		namespace SuperForms {
+			type Message = {
+				type: 'error' | 'success' | 'warning', text:string
+			}
+		}
 	}
 }
 

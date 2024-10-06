@@ -20,7 +20,7 @@ const loginSchema = z.object({
             return rest(10) === cpfDigits[9] && rest(11) === cpfDigits[10];
         }, "Digite um CPF válido."),
     password: z.string().min(8, { message: "A senha deve conter ao menos 8 caracteres" }),
-    confirm: z.string().min(8, { message: "A senha deve conter ao menos 8 caracteres" }),
+    confirm: z.string(),
     name: z.string()
 })
     .refine((data) => data.password == data.confirm, "As senhas não coincidem");
@@ -57,11 +57,12 @@ export const actions: Actions = {
         })
 
         if(!response.ok){
-            console.log('erro')
-            return message(form, { status: 'error', text: 'CPF já está cadastrado dentro do sistema' })
+            return setError(form, 'cpf', 'O CPF já está cadastrado', {
+                overwrite: true,
+                status: 409
+            })
         }
 
-        console.log('ok')
-        return message(form, { status: 'success', text: 'Usuário registrado com sucesso' });
+        return message(form, { status: 'success', text: 'Usuário cadastrado com sucesso' })
     }
 }

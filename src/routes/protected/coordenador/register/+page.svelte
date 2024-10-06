@@ -1,15 +1,24 @@
 <script lang="ts">
     // TODO:
-    // passar essa tela de login apenas para edição dos coordenadores.
+    // mostrar botao de confirmar registro antes de fazer a requisição.
+
     import type {PageData} from "./$types";
     import SuperDebug, {superForm} from "sveltekit-superforms";
     import { imask } from '@imask/svelte';
-    import { page } from '$app/stores'
-    import {error} from "@sveltejs/kit";
+    import { messageAction } from "svelte-legos";
+    import toast from "svelte-french-toast";
 
     export let data: PageData
     const { form, errors, enhance, message } = superForm(data.form, {
         resetForm: true,
+
+        // TODO:
+        // usar tainted message para previnir que o usuário
+        // saia sem salvar as informações
+
+        // TODO:
+        // mostrar modal perguntando se o usuário quer mesmo
+        // fazer submit no formulário.
     });
 
     const options = {
@@ -21,15 +30,9 @@
 <svelte:head>
     <title>Registrar</title>
 </svelte:head>
-
-<div class="m-10">
-    <SuperDebug data={$form}></SuperDebug>
-</div>
-
-
-<div class="justify-center">
+<div class="justify-center" id="id">
     <div class="prose m-auto select-none">
-        <h1 class="text-center text-primary m-10">Registrar</h1>
+        <h1 class="text-center text-primary m-10">Cadastro</h1>
         <form method="post" action="?/register" class="form-control" use:enhance>
             <div class="m-3">
                 <label class="label-text" for="cpf">CPF<small>*</small></label>
@@ -119,14 +122,15 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" />
                     </svg>
                 </label>
-                {#if $errors.confirm}
-                    <p class="text-error text-sm m-0 ml-1 mt-2">{$errors.confirm}</p>
+                {#if $errors?._errors}
+                    <p class="text-error text-sm  mt-2">{$errors?._errors}</p>
                 {/if}
             </div>
             <button class="btn btn-primary m-3" type="submit">Registrar</button>
         </form>
-        {#if $errors?._errors}
-            <p class="text-error text-sm  mt-2 text-center">{$errors?._errors}</p>
-        {/if}
     </div>
+</div>
+
+<div class="m-10">
+    <SuperDebug data={$form}></SuperDebug>
 </div>

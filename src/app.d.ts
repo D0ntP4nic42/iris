@@ -13,7 +13,7 @@ declare global {
 		interface Platform {}
 		namespace SuperForms {
 			type Message = {
-				type: 'error' | 'success', text:string
+				type: 'error' | 'success' | 'warning', text:string
 			}
 		}
 	}

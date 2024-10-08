@@ -95,7 +95,7 @@
                             name="name"
                             type="text"
                             class="grow"
-                            placeholder="Fulano da Silva"
+                            placeholder="John Doe"
                             spellcheck="false"
                             autocomplete="off"
                             bind:value={$form.name}

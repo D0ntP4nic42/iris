@@ -114,30 +114,34 @@
                 {/if}
             </div>
             <div class="m-3">
-                <label class="label-text" for="Senha">Senha</label>
-                <label class="input input-bordered flex items-center gap-2">
-                    {#if showPassword}
-                        <input
-                                name="password"
-                                type="text"
-                                class="grow"
-                                placeholder="Senha"
-                                spellcheck="false"
-                                autocomplete="off"
-                                bind:value={$form.password}
-                        />
-                    {:else}
-                        <input
-                                name="password"
-                                type="password"
-                                class="grow"
-                                placeholder="Senha"
-                                spellcheck="false"
-                                autocomplete="off"
-                                bind:value={$form.password}
-                        />
-                    {/if}
-                    <button type="button" on:click={togglePasswordVisibility}>
+                <!--TODO: Ajustar o botão de visibilidade de senha de uma forma coerente.-->
+                <div>
+                    <label class="label-text" for="Senha">Senha</label>
+                    <label class="input input-bordered flex items-center gap-2">
+                        {#if showPassword}
+                            <input
+                                    name="password"
+                                    type="text"
+                                    class="grow"
+                                    placeholder="Senha"
+                                    spellcheck="false"
+                                    autocomplete="off"
+                                    bind:value={$form.password}
+                            />
+                        {:else}
+                            <input
+                                    name="password"
+                                    type="password"
+                                    class="grow"
+                                    placeholder="Senha"
+                                    spellcheck="false"
+                                    autocomplete="off"
+                                    bind:value={$form.password}
+                            />
+                        {/if}
+
+                    </label>
+                    <button type="button" class="btn btn-ghost" on:click={togglePasswordVisibility}>
                         {#if showPassword}
                             <svg
                                     class="h-4 w-4 opacity-70"
@@ -153,7 +157,7 @@
                             </svg>
                         {/if}
                     </button>
-                </label>
+                </div>
 
                 {#if $errors.password}
                     <p class="text-error text-sm m-0 ml-1 mt-2">{$errors.password}</p>

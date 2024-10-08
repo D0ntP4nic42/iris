@@ -8,7 +8,10 @@ declare global {
 		interface Locals {
 			user: User
 		}
-		interface PageData {}
+		interface PageData {
+			flash?: { type: 'success' | 'error' | 'warning'; message: string };
+		}
+
 		interface PageState {}
 		interface Platform {}
 		namespace SuperForms {

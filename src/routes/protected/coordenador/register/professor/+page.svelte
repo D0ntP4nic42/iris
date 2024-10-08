@@ -1,7 +1,4 @@
 <script lang="ts">
-    // TODO:
-    // mostrar botao de confirmar registro antes de fazer a requisição.
-
     import type {PageData} from "./$types";
     import {superForm} from "sveltekit-superforms";
     import { imask } from '@imask/svelte';
@@ -50,7 +47,7 @@
     }
 
     $: if (showModal) {
-        const dialog = document.getElementById('modal_confirmar') as HTMLDialogElement;
+        const dialog = document.getElementById('modal_confirm') as HTMLDialogElement;
         dialog.showModal();
     }
 </script>
@@ -157,7 +154,7 @@
             </div>
             <button class="btn btn-primary m-3" type="submit">Registrar Professor</button>
         </form>
-        <dialog id="modal_confirmar" class="modal">
+        <dialog id="modal_confirm" class="modal">
             <div class="modal-box">
                 <h3 class="text-lg font-bold">Aviso:</h3>
                 <p class="py-4">Ao confirmar esse diálogo, as alterações serão confirmadas, verifique se os dados estão realmente corretos antes de confirmar.</p>

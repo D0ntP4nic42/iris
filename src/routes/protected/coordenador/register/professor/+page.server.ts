@@ -1,11 +1,10 @@
 import type { PageServerLoad } from './$types';
-import {message, setError, superValidate} from 'sveltekit-superforms'
+import {message, superValidate} from 'sveltekit-superforms'
 import { zod } from 'sveltekit-superforms/adapters'
 import { z } from 'zod';
-import {type Actions, error, fail, redirect, type RequestEvent} from "@sveltejs/kit";
+import {type Actions, fail} from "@sveltejs/kit";
 import { BACKEND_URL } from '$env/static/private';
-import type {User} from "$lib/types/User";
-
+import {setFlash} from "sveltekit-flash-message/server";
 
 const loginSchema = z.object({
     cpf: z.string()
@@ -21,7 +20,7 @@ const loginSchema = z.object({
         }, "Digite um CPF válido."),
     password: z.string().min(8, { message: "A senha deve conter ao menos 8 caracteres" }),
     confirm: z.string(),
-    name: z.string()
+    name: z.string(),
 })
     .refine((data) => data.password == data.confirm, "As senhas não coincidem");
 
@@ -32,7 +31,7 @@ export const load = (async () => {
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
-    register: async ({ request }) => {
+    register: async ({ request, cookies }) => {
         const form = await superValidate(request, zod(loginSchema));
         
         if(!form.valid){
@@ -57,12 +56,13 @@ export const actions: Actions = {
         })
 
         if(!response.ok){
-            return setError(form, 'cpf', 'O CPF já está cadastrado', {
-                overwrite: true,
+            setFlash({ type: 'error', message: 'O CPF já está cadastrado no sistema.' }, cookies)
+            return message(form, { status: 'error', text: 'O CPF já foi cadastrado no sistema.' }, {
                 status: 409
             })
         }
 
-        return message(form, { status: 'success', text: 'Usuário cadastrado com sucesso' })
+        setFlash({ type: 'success', message: 'O professor foi cadastrado com sucesso!' }, cookies)
+        return { form }
     }
 }

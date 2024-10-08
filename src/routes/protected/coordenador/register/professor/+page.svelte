@@ -3,37 +3,67 @@
     // mostrar botao de confirmar registro antes de fazer a requisição.
 
     import type {PageData} from "./$types";
-    import SuperDebug, {superForm} from "sveltekit-superforms";
+    import {superForm} from "sveltekit-superforms";
     import { imask } from '@imask/svelte';
 
     export let data: PageData
     const { form, errors, enhance, message } = superForm(data.form, {
         resetForm: true,
 
-        // TODO:
-        // usar tainted message para previnir que o usuário
-        // saia sem salvar as informações
+        taintedMessage: () => {
+            return new Promise((resolve) => {
+                window.confirm('Você deseja mesmo sair sem salvar as alterações?')
+            })
+        },
 
-        // TODO:
-        // mostrar modal perguntando se o usuário quer mesmo
-        // fazer submit no formulário.
+        onSubmit: ({ formElement, cancel }) => {
+            showModal = true;
+
+            return new Promise((resolve) => {
+                resolveSubmit = resolve;
+            }).then((confirmed) => {
+                if (confirmed) {
+                    formElement.submit();
+                } else {
+                    cancel();
+                }
+            });
+        }
     });
 
     const options = {
         mask: '000{.}000{.}000{-}00',
-        lazy:true
+        lazy: true
+    };
+
+    let showModal = false;
+    let resolveSubmit: (value: boolean) => void;
+
+    function confirmSubmit() {
+        showModal = false;
+        resolveSubmit(true);
+    }
+
+    function cancelSubmit() {
+        showModal = false;
+        resolveSubmit(false);
+    }
+
+    $: if (showModal) {
+        const dialog = document.getElementById('modal_confirmar') as HTMLDialogElement;
+        dialog.showModal();
     }
 </script>
 
 <svelte:head>
-    <title>Registrar</title>
+    <title>Cadastro - Professor</title>
 </svelte:head>
-<div class="justify-center" id="id">
+<div class="justify-center">
     <div class="prose m-auto select-none">
-        <h1 class="text-center text-primary m-10">Cadastro</h1>
+        <h1 class="text-center text-primary m-10">*colocar um título legal*</h1>
         <form method="post" action="?/register" class="form-control" use:enhance>
             <div class="m-3">
-                <label class="label-text" for="cpf">CPF<small>*</small></label>
+                <label class="label-text" for="cpf">CPF</label>
                 <label class="input input-bordered flex items-center gap-2">
                     <input
                             name="cpf"
@@ -59,12 +89,13 @@
                 {/if}
             </div>
             <div class="m-3">
-                <label class="label-text" for="name">Nome<small>*</small></label>
+                <label class="label-text" for="name">Nome</label>
                 <label class="input input-bordered flex items-center gap-2">
                     <input
                             name="name"
                             type="text"
                             class="grow"
+                            placeholder="John Doe"
                             spellcheck="false"
                             autocomplete="off"
                             bind:value={$form.name}
@@ -81,7 +112,7 @@
                 {/if}
             </div>
             <div class="m-3">
-                <label class="label-text" for="Senha">Senha<small>*</small></label>
+                <label class="label-text" for="Senha">Senha</label>
                 <label class="input input-bordered flex items-center gap-2">
                     <input
                             name="password"
@@ -103,7 +134,7 @@
                 {/if}
             </div>
             <div class="m-3">
-                <label class="label-text" for="confirm">Confirmar senha<small>*</small></label>
+                <label class="label-text" for="confirm">Confirmar senha</label>
                 <label class="input input-bordered flex items-center gap-2">
                     <input
                             name="confirm"
@@ -124,11 +155,19 @@
                     <p class="text-error text-sm  mt-2">{$errors?._errors}</p>
                 {/if}
             </div>
-            <button class="btn btn-primary m-3" type="submit">Registrar</button>
+            <button class="btn btn-primary m-3" type="submit">Registrar Professor</button>
         </form>
+        <dialog id="modal_confirmar" class="modal">
+            <div class="modal-box">
+                <h3 class="text-lg font-bold">Aviso:</h3>
+                <p class="py-4">Ao confirmar esse diálogo, as alterações serão confirmadas, verifique se os dados estão realmente corretos antes de confirmar.</p>
+                <div class="modal-action">
+                    <form method="dialog">
+                        <button class="btn" on:click={confirmSubmit}>Confirmar</button>
+                        <button class="btn" on:click={cancelSubmit}>Cancelar</button>
+                    </form>
+                </div>
+            </div>
+        </dialog>
     </div>
-</div>
-
-<div class="m-10">
-    <SuperDebug data={$form}></SuperDebug>
 </div>

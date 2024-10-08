@@ -62,6 +62,7 @@
 </svelte:head>
 <div class="justify-center">
     <div class="prose m-auto select-none">
+        <!--TODO: Colocar um título legal-->
         <h1 class="text-center text-primary m-10">*colocar um título legal*</h1>
         <form method="post" action="?/register" class="form-control" use:enhance>
             <div class="m-3">
